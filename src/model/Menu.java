@@ -4,19 +4,49 @@
  */
 package model;
 
+import DB.koneksi;
+import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 /**
  *
  * @author Dzikri
  */
 public class Menu {
+
+    private int id;
     private String item;
     private String description;
     private Double price;
+
+    private Connection conn;
+    private PreparedStatement pst;
+    private ResultSet rst;
     
+    public Menu(){
+        
+    }
+
     public Menu(String item, String description, Double price) {
         this.item = item;
         this.description = description;
         this.price = price;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -59,5 +89,71 @@ public class Menu {
      */
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public boolean insert(String name, String description, Double price) {
+        boolean result = false;
+
+        try {
+            conn = koneksi.koneksi();
+            pst = conn.prepareStatement("SELECT name FROM menu WHERE name = '"
+                    + name + "'");
+            rst = pst.executeQuery();
+
+            if (!rst.next()) {
+                pst = conn.prepareStatement("INSERT INTO menu (name, description, price) VALUES ('"
+                        + name + "','"
+                        + description + "','"
+                        + price + "');");
+                pst.execute();
+
+                result = true;
+            } else {
+                result = false;
+            }
+        } catch (SQLException e) {
+            result = false;
+        }
+
+        return result;
+    }
+    
+    public ResultSet getAllMenuItems() {
+        ResultSet rs = null;
+
+        try {
+            conn = koneksi.koneksi();
+            pst = conn.prepareStatement("SELECT * FROM menu");
+            rs = pst.executeQuery();
+        } catch (Exception e) {
+        }
+
+        return rs;
+    }
+    
+    public boolean updateUser(int id, String name, String description, Double price) {
+        boolean result = false;
+        try {
+            conn = koneksi.koneksi();
+            pst = conn.prepareStatement("UPDATE menu SET " 
+                    + "name = '" + name + "', "
+                    + "description = '" + description + "', "
+                    + "price = '" +  price + "', "
+                    + "WHERE id = '" + id + "'");
+            pst.execute();
+            result = true;
+        } catch (SQLException e) {
+            result = false;
+        }
+        return result;
+    }
+    
+    public void deleteUser(int id) {
+        try {
+            conn = koneksi.koneksi();
+            pst = conn.prepareStatement("DELETE FROM menu WHERE id = '" + id + "'");
+            pst.execute();
+        } catch (Exception e) {
+        }
     }
 }

@@ -33,13 +33,6 @@ public class ItemManagement extends javax.swing.JFrame {
     }
 
     /**
-     * @return the deleteButton
-     */
-    public javax.swing.JButton getDeleteButton() {
-        return deleteButton;
-    }
-
-    /**
      * @return the modifyButton
      */
     public javax.swing.JButton getModifyButton() {
@@ -68,7 +61,6 @@ public class ItemManagement extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         addButton = new javax.swing.JButton();
         viewButton = new javax.swing.JButton();
-        deleteButton = new javax.swing.JButton();
         modifyButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
 
@@ -88,35 +80,30 @@ public class ItemManagement extends javax.swing.JFrame {
 
         viewButton.setText("View Item");
 
-        deleteButton.setText("Delete Item");
-
-        modifyButton.setText("Modify Item");
+        modifyButton.setText("Update Item");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(viewButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(modifyButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(23, 23, 23))
+                .addGap(24, 24, 24))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(30, Short.MAX_VALUE)
                 .addComponent(addButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(viewButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(deleteButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(modifyButton)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
 
         backButton.setText("Back");
@@ -173,7 +160,6 @@ public class ItemManagement extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton backButton;
-    private javax.swing.JButton deleteButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;

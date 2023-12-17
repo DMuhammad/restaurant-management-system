@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import view.admin.MainMenu;
 import view.admin.menu.*;
+import view.admin.user.UserManagement;
 /**
  *
  * @author Dzikri
@@ -20,11 +21,6 @@ public class MainMenuController {
         this.mainView = mainView;
         mainView.setVisible(true);
         addEventMainMenu();
-    }
-    
-    public MainMenuController(ItemManagement itemMenuView) {
-        this.itemMenuView = itemMenuView;
-        itemMenuView.setVisible(true);
     }
     
     public void addEventMainMenu() {
@@ -42,13 +38,13 @@ public class MainMenuController {
 //                mainView.dispose();
 //            }
 //        });
-//        mainView.getUserManagementButton().addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                new MenuController(new UpdateItem());
-//                mainView.dispose();
-//            }
-//        });
+        mainView.getUserManagementButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new UserManagementController(new UserManagement());
+                mainView.dispose();
+            }
+        });
         mainView.getExitButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -37,19 +37,23 @@ public class AddItem extends javax.swing.JFrame {
     }
 
     /**
-     * @return the itemPriceField
+     * @return the itemDescField
      */
-    public JTextField getItemPriceField() {
-        return itemPriceField;
+    public javax.swing.JTextField getItemDescField() {
+        return itemDescField;
     }
 
     /**
-     * @return the itemQuantityField
+     * @return the itemPriceField
      */
-    public JTextField getItemQuantityField() {
-        return itemQuantityField;
+    public javax.swing.JTextField getItemPriceField() {
+        return itemPriceField;
     }
-
+    
+    public void showMessage(String message) {
+        JOptionPane.showMessageDialog(this, message);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,9 +66,9 @@ public class AddItem extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        itemPriceField = new javax.swing.JTextField();
+        itemDescField = new javax.swing.JTextField();
         itemNameField = new javax.swing.JTextField();
-        itemQuantityField = new javax.swing.JTextField();
+        itemPriceField = new javax.swing.JTextField();
         addButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
 
@@ -73,17 +77,12 @@ public class AddItem extends javax.swing.JFrame {
 
         jLabel1.setText("Item Name");
 
-        jLabel2.setText("Item Price");
+        jLabel2.setText("Item Description");
 
-        jLabel3.setText("Item Quantity");
+        jLabel3.setText("Item Price");
 
         addButton.setBackground(new java.awt.Color(0, 255, 153));
         addButton.setText("Add");
-        addButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButtonActionPerformed(evt);
-            }
-        });
 
         backButton.setText("Back");
 
@@ -105,8 +104,8 @@ public class AddItem extends javax.swing.JFrame {
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(56, 56, 56)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(itemQuantityField)
                             .addComponent(itemPriceField)
+                            .addComponent(itemDescField)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(itemNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
@@ -126,13 +125,13 @@ public class AddItem extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(itemNameField)
                         .addGap(18, 18, 18)
-                        .addComponent(itemPriceField)))
+                        .addComponent(itemDescField)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(itemQuantityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(itemPriceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(backButton)
@@ -144,41 +143,6 @@ public class AddItem extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-       
-        String name = getItemNameField().getText();
-        String price = getItemPriceField().getText();
-        String quantity = getItemQuantityField().getText();
-        
-        if(name.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Item name cannot be empty");
-            return;
-        }
-       
-        if(price.isEmpty() || !price.chars().allMatch( Character::isDigit) ||
-                Double.parseDouble(price) <= 0) {
-            JOptionPane.showMessageDialog(this, "Please enter a valid price for the item");
-            return;
-        }
-        
-        if(quantity.isEmpty() || !quantity.chars().allMatch( Character::isDigit) 
-                || Integer.parseInt(quantity) <=0) {
-            JOptionPane.showMessageDialog(this, "Please enter a valid quantity for the item");
-            return;
-        }
-        
-//        Item item = new Item(name,
-//                    Double.parseDouble(getItemPriceField().getText()),
-//                    Integer.parseInt(getItemQuantityField().getText()));
-//        
-//        itemService.create(item);
-      
-        getItemNameField().setText("");
-        getItemPriceField().setText("");
-        getItemQuantityField().setText("");
-        JOptionPane.showMessageDialog(this, "Item has been added");
-    }//GEN-LAST:event_addButtonActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -186,9 +150,9 @@ public class AddItem extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton backButton;
+    private javax.swing.JTextField itemDescField;
     private javax.swing.JTextField itemNameField;
     private javax.swing.JTextField itemPriceField;
-    private javax.swing.JTextField itemQuantityField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
