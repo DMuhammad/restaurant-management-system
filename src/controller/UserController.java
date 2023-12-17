@@ -83,15 +83,12 @@ public class UserController {
 
         try {
             if (email.equals("") || password.equals("")) {
-                registerView.showMessage("EMAIL / PASSWORD");
+                loginView.showMessage("EMAIL / PASSWORD HARUS DIISI");
             } else if (password.length() < 6) {
-                registerView.showMessage("PASSWORD MINIMAL 6 KATA");
+                loginView.showMessage("PASSWORD MINIMAL 6 KATA");
             } else {
-                System.out.println("1");
                 role = new User(email, password).getUserByEmail();
-                System.out.println("2");
                 if (role != null) {
-                    System.out.println(role);
                     loginView.showMessage("LOGIN BERHASIL");
 
                     switch (role) {

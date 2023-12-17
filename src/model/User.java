@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import view.admin.menu.ItemManagement;
 import view.auth.Login;
 
@@ -20,6 +21,7 @@ import view.auth.Login;
  */
 public class User {
 
+    private int id;
     private String username;
     private String email;
     private String password;
@@ -43,6 +45,20 @@ public class User {
     public User(String email, String password) {
         this.email = email;
         this.password = password;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -148,10 +164,42 @@ public class User {
                 result = null;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             result = null;
         }
 
         return result;
+    }
+    
+    public ResultSet getAllUsers() {
+        ResultSet rs = null;
+
+        try {
+            conn = koneksi.koneksi();
+            pst = conn.prepareStatement("SELECT * FROM user");
+            rs = pst.executeQuery();
+        } catch (Exception e) {
+        }
+
+        return rs;
+    }
+    
+    public void updateUser() {
+        try {
+            conn = koneksi.koneksi();
+            pst = conn.prepareStatement("UPDATE user SET role = '"
+                    + this.role + "' WHERE email = '"
+                    + this.email + "'");
+            pst.execute();
+        } catch (SQLException e) {
+        }
+    }
+    
+    public void deleteUser() {
+        try {
+            conn = koneksi.koneksi();
+            pst = conn.prepareStatement("DELETE FROM user WHERE id = '" + this.id + "'");
+            pst.execute();
+        } catch (Exception e) {
+        }
     }
 }
