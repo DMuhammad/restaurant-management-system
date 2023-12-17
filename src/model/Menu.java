@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -17,7 +19,7 @@ import java.sql.ResultSet;
 public class Menu {
 
     private int id;
-    private String item;
+    private String name;
     private String description;
     private Double price;
 
@@ -29,8 +31,9 @@ public class Menu {
         
     }
 
-    public Menu(String item, String description, Double price) {
-        this.item = item;
+    public Menu(int id, String name, String description, Double price) {
+        this.id = id;
+        this.name = name;
         this.description = description;
         this.price = price;
     }
@@ -52,15 +55,15 @@ public class Menu {
     /**
      * @return the item
      */
-    public String getItem() {
-        return item;
+    public String getName() {
+        return name;
     }
 
     /**
      * @param item the item to set
      */
-    public void setItem(String item) {
-        this.item = item;
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
@@ -118,17 +121,26 @@ public class Menu {
         return result;
     }
     
-    public ResultSet getAllMenuItems() {
-        ResultSet rs = null;
+    public List<Menu> getAllMenuItems() {
+        List<Menu> menuList = new ArrayList<>();
 
         try {
-            conn = koneksi.koneksi();
-            pst = conn.prepareStatement("SELECT * FROM menu");
-            rs = pst.executeQuery();
+            Connection conn = koneksi.koneksi();
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM menu");
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String description = rs.getString("description");
+                double price = rs.getDouble("price");
+                Menu menu = new Menu(id, name, description, price);
+                menuList.add(menu);
+            }
         } catch (Exception e) {
         }
 
-        return rs;
+        return menuList;
     }
     
     public boolean updateUser(int id, String name, String description, Double price) {

@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -221,17 +222,14 @@ public class MenuController {
 
     public void showMenus(DefaultTableModel model) {
         model.setRowCount(0);
-        try {
-            rst = new Menu().getAllMenuItems();
-            while (rst.next()) {
-                model.addRow(new Object[]{
-                    rst.getInt("id"),
-                    rst.getString("name"),
-                    rst.getString("description"),
-                    rst.getDouble("price")
-                });
-            }
-        } catch (SQLException ex) {
+        List<Menu> menuList = new Menu().getAllMenuItems();
+        for (Menu mn : menuList) {
+            model.addRow(new Object[]{
+                mn.getId(),
+                mn.getName(),
+                mn.getDescription(),
+                mn.getPrice()
+            });
         }
     }
 }
