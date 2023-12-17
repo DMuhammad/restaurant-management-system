@@ -5,8 +5,6 @@
  */
 package view.admin.menu;
 
-import javax.swing.JButton;
-
 /**
  *
  * @author Shahin
@@ -23,28 +21,35 @@ public class ItemManagement extends javax.swing.JFrame {
     /**
      * @return the addButton
      */
-    public JButton getAddButton() {
+    public javax.swing.JButton getAddButton() {
         return addButton;
+    }
+
+    /**
+     * @return the backButton
+     */
+    public javax.swing.JButton getBackButton() {
+        return backButton;
     }
 
     /**
      * @return the deleteButton
      */
-    public JButton getDeleteButton() {
+    public javax.swing.JButton getDeleteButton() {
         return deleteButton;
     }
 
     /**
      * @return the modifyButton
      */
-    public JButton getModifyButton() {
+    public javax.swing.JButton getModifyButton() {
         return modifyButton;
     }
 
     /**
      * @return the viewButton
      */
-    public JButton getViewButton() {
+    public javax.swing.JButton getViewButton() {
         return viewButton;
     }
 
@@ -65,6 +70,7 @@ public class ItemManagement extends javax.swing.JFrame {
         viewButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         modifyButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
 
         jLabel3.setText("jLabel3");
 
@@ -113,21 +119,30 @@ public class ItemManagement extends javax.swing.JFrame {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
+        backButton.setText("Back");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(backButton)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(backButton)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -135,16 +150,16 @@ public class ItemManagement extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(64, 64, 64)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(59, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(78, 78, 78))
         );
 
         pack();
@@ -157,6 +172,7 @@ public class ItemManagement extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
+    private javax.swing.JButton backButton;
     private javax.swing.JButton deleteButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel3;
@@ -165,5 +181,4 @@ public class ItemManagement extends javax.swing.JFrame {
     private javax.swing.JButton modifyButton;
     private javax.swing.JButton viewButton;
     // End of variables declaration//GEN-END:variables
-
 }

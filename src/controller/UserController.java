@@ -4,6 +4,8 @@
  */
 package controller;
 
+import view.auth.Register;
+import view.auth.Login;
 import view.admin.menu.ItemManagement;
 import DB.koneksi;
 import java.awt.event.ActionEvent;
@@ -16,7 +18,7 @@ import model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import view.*;
+import view.admin.MainMenu;
 
 /**
  *
@@ -77,6 +79,7 @@ public class UserController {
     public void login() {
         String email = loginView.getEmail().getText();
         String password = new String(loginView.getPassword().getPassword());
+        String role;
 
         try {
             if (email.equals("") || password.equals("")) {
@@ -84,31 +87,42 @@ public class UserController {
             } else if (password.length() < 6) {
                 registerView.showMessage("PASSWORD MINIMAL 6 KATA");
             } else {
-                conn = koneksi.koneksi();
-                pst = conn.prepareStatement("SELECT email, password, role FROM user WHERE email = '"
-                        + email + "'");
-                rst = pst.executeQuery();
+                System.out.println("1");
+                role = new User(email, password).getUserByEmail();
+                System.out.println("2");
+                if (role != null) {
+                    System.out.println(role);
+                    loginView.showMessage("LOGIN BERHASIL");
 
-                if (rst.next()) {
-                    if (password.equals(rst.getString("password"))) {
-                        user = new User(rst.getString("email"), rst.getString("role"));
-                        loginView.showMessage("LOGIN BERHASIL");
-                        
-                        if ("Admin".equals(user.getRole())) {
-                            new MenuController(new ItemManagement());
+                    switch (role) {
+                        case "Admin":
+                            new MainMenuController(new MainMenu());
                             loginView.dispose();
-                        }
-
-//                        new UserController(new Login());
-//                        registerView.dispose();
-                    } else {
-                        loginView.showMessage("PASSWORD SALAH. SILAHKAN COBA LAGI.");
+                            break;
+                        case "Chef":
+//                            EmployeeDashboardController controller1 = new EmployeeDashboardController(new EmployeeDashboardView());
+//                            controller1.getView().setPanel(new HomeView());
+//                            view.dispose();// Tắt form đăng nhập                    
+                            break;
+                        case "Waiter":
+//                            view.showError("Tài khoản của bạn đã bị khóa.\nVui lòng liên hệ admin để biết thêm chi tiết");
+//                            SessionManager.update();
+//                            view.dispose();
+                            break;
+                        case "Cashier":
+                            break;
+                        default:
+//                            view.showError("Vui lòng liên hệ admin để biết thêm chi tiết");
+//                            SessionManager.update();
+//                            view.dispose();
+                            break;
                     }
                 } else {
-                    loginView.showMessage("EMAIL TIDAK DITEMUKAN. SILAHKAN COBA LAGI ATAU DAFTAR TERLEBIH DAHULU.");
+                    loginView.showMessage("AKUN TIDAK DITEMUKAN. SILAHKAN COBA LAGI ATAU DAFTAR TERLEBIH DAHULU.");
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -117,37 +131,25 @@ public class UserController {
         String email = registerView.getEmail().getText();
         String password = new String(registerView.getPassword().getPassword());
         String confPassword = new String(registerView.getConfPassword().getPassword());
+        String role = "Customer";
+        boolean status;
 
-        try {
-            if (username.equals("") || email.equals("") || password.equals("") || confPassword.equals("")) {
-                registerView.showMessage("USERNAME / EMAIL / PASSWORD / CONFIRM PASSWORD HARUS DI ISI");
-            } else if (password.length() < 6 || confPassword.length() < 6) {
-                registerView.showMessage("PASSWORD / CONFIRM PASSWORD MINIMAL 6 KATA");
-            } else if (!confPassword.equals(password)) {
-                registerView.showMessage("PASSWORD / CONFIRM PASSWORD HARUS SAMA");
+        if (username.equals("") || email.equals("") || password.equals("") || confPassword.equals("")) {
+            registerView.showMessage("USERNAME / EMAIL / PASSWORD / CONFIRM PASSWORD HARUS DI ISI");
+        } else if (password.length() < 6 || confPassword.length() < 6) {
+            registerView.showMessage("PASSWORD / CONFIRM PASSWORD MINIMAL 6 KATA");
+        } else if (!confPassword.equals(password)) {
+            registerView.showMessage("PASSWORD / CONFIRM PASSWORD HARUS SAMA");
+        } else {
+            status = new User(username, email, password, role).insert();
+            if (status) {
+                registerView.showMessage("PENDAFTARAN BERHASIL");
+                new UserController(new Login());
+                registerView.dispose();
+
             } else {
-                conn = koneksi.koneksi();
-                pst = conn.prepareStatement("SELECT email FROM user WHERE email = '"
-                        + email + "'");
-                rst = pst.executeQuery();
-
-                if (!rst.next()) {
-                    pst = conn.prepareStatement("INSERT INTO user (username, email, password) VALUES ('"
-                            + username + "','"
-                            + email + "','"
-                            + password + "');");
-                    pst.execute();
-                    new User(username, email, password);
-
-                    registerView.showMessage("PENDAFTARAN BERHASIL");
-                    new UserController(new Login());
-                    registerView.dispose();
-
-                } else {
-                    registerView.showMessage("EMAIL SUDAH TERDAFTAR. SILAHKAN LOGIN ATAU GUNAKAN EMAIL LAIN.");
-                }
+                registerView.showMessage("EMAIL SUDAH TERDAFTAR. SILAHKAN LOGIN ATAU GUNAKAN EMAIL LAIN.");
             }
-        } catch (Exception e) {
         }
     }
 

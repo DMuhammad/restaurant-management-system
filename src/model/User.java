@@ -4,29 +4,45 @@
  */
 package model;
 
+import DB.koneksi;
+import controller.MenuController;
+import controller.UserController;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import view.admin.menu.ItemManagement;
+import view.auth.Login;
+
 /**
  *
  * @author Dzikri
  */
 public class User {
+
     private String username;
     private String email;
     private String password;
     private String role;
-    
+
+    private Connection conn;
+    private PreparedStatement pst;
+    private ResultSet rst;
+
     public User() {
-        
+
     }
-    
-    public User(String username, String email, String password) {
+
+    public User(String username, String email, String password, String role) {
         this.username = username;
         this.email = email;
         this.password = password;
-    }
-    
-    public User(String email, String role) {
-        this.email = email;
         this.role = role;
+    }
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
     /**
@@ -83,5 +99,59 @@ public class User {
      */
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public boolean insert() {
+        boolean result = false;
+
+        try {
+            conn = koneksi.koneksi();
+            pst = conn.prepareStatement("SELECT email FROM user WHERE email = '"
+                    + email + "'");
+            rst = pst.executeQuery();
+
+            if (!rst.next()) {
+                pst = conn.prepareStatement("INSERT INTO user (username, email, password, role) VALUES ('"
+                        + username + "','"
+                        + email + "','"
+                        + password + "','"
+                        + role + "');");
+                pst.execute();
+
+                result = true;
+            } else {
+                result = false;
+            }
+        } catch (SQLException e) {
+            result = false;
+        }
+
+        return result;
+    }
+
+    public String getUserByEmail() {
+        String result = null;
+
+        try {
+            conn = koneksi.koneksi();
+            pst = conn.prepareStatement("SELECT email, password, role FROM user WHERE email = '"
+                    + email + "'");
+            rst = pst.executeQuery();
+
+            if (rst.next()) {
+                if (password.equals(rst.getString("password"))) {
+                    result = rst.getString("role");
+                } else {
+                    result = null;
+                }
+            } else {
+                result = null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            result = null;
+        }
+
+        return result;
     }
 }

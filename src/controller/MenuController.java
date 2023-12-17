@@ -11,7 +11,7 @@ import view.admin.menu.DeleteItem;
 import view.admin.menu.AddItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import view.*;
+import view.admin.MainMenu;
 
 /**
  *
@@ -81,6 +81,13 @@ public class MenuController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new MenuController(new DeleteItem());
+                itemView.dispose();
+            }
+        });
+        itemView.getBackButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new MainMenuController(new MainMenu());
                 itemView.dispose();
             }
         });

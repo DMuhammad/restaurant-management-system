@@ -5,7 +5,7 @@
 package mystic.grills;
 
 import controller.UserController;
-import view.Login;
+import view.auth.Login;
 
 /**
  *
