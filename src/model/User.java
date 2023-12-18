@@ -145,29 +145,24 @@ public class User {
         return result;
     }
 
-    public String getUserByEmail() {
-        String result = null;
+    public ResultSet getUserByEmail() {
+        ResultSet rs = null;
 
         try {
             conn = koneksi.koneksi();
-            pst = conn.prepareStatement("SELECT email, password, role FROM user WHERE email = '"
+            pst = conn.prepareStatement("SELECT * FROM user WHERE email = '"
                     + email + "'");
             rst = pst.executeQuery();
 
             if (rst.next()) {
                 if (password.equals(rst.getString("password"))) {
-                    result = rst.getString("role");
-                } else {
-                    result = null;
+                    rs = rst;
                 }
-            } else {
-                result = null;
             }
         } catch (SQLException e) {
-            result = null;
         }
 
-        return result;
+        return rs;
     }
     
     public ResultSet getAllUsers() {

@@ -15,7 +15,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import view.admin.user.UserManagement;
 import model.User;
-import view.admin.MainMenu;
+import view.admin.MainMenuAdmin;
 
 /**
  *
@@ -75,7 +75,7 @@ public class UserManagementController {
         userManagement.getBtn_back().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new MainMenuController(new MainMenu());
+                new MainMenuController(new MainMenuAdmin());
                 userManagement.dispose();
             }
         });

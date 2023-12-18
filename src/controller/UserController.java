@@ -18,7 +18,11 @@ import model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import view.admin.MainMenu;
+import view.admin.MainMenuAdmin;
+import view.cashier.OrderPayment;
+import view.chef.PendingOrder;
+import view.menu.MainMenu;
+import view.waiters.PreparedOrder;
 
 /**
  *
@@ -80,6 +84,7 @@ public class UserController {
         String email = loginView.getEmail().getText();
         String password = new String(loginView.getPassword().getPassword());
         String role;
+        ResultSet rs;
 
         try {
             if (email.equals("") || password.equals("")) {
@@ -87,31 +92,33 @@ public class UserController {
             } else if (password.length() < 6) {
                 loginView.showMessage("PASSWORD MINIMAL 6 KATA");
             } else {
-                role = new User(email, password).getUserByEmail();
-                if (role != null) {
+                rs = new User(email, password).getUserByEmail();
+                if (rs != null) {
                     loginView.showMessage("LOGIN BERHASIL");
+                    int id = rs.getInt("id");
+                    user = new User();
+                    user.setId(id);
 
-                    switch (role) {
+                    switch (rs.getString("role")) {
                         case "Admin":
-                            new MainMenuController(new MainMenu());
+                            new MainMenuController(new MainMenuAdmin());
                             loginView.dispose();
                             break;
                         case "Chef":
-//                            EmployeeDashboardController controller1 = new EmployeeDashboardController(new EmployeeDashboardView());
-//                            controller1.getView().setPanel(new HomeView());
-//                            view.dispose();// Tắt form đăng nhập                    
+                            new OrderController(new PendingOrder());
+                            loginView.dispose();
                             break;
                         case "Waiter":
-//                            view.showError("Tài khoản của bạn đã bị khóa.\nVui lòng liên hệ admin để biết thêm chi tiết");
-//                            SessionManager.update();
-//                            view.dispose();
+                            new OrderController(new PreparedOrder());
+                            loginView.dispose();
                             break;
                         case "Cashier":
+                            new ReceiptController(new OrderPayment());
+                            loginView.dispose();
                             break;
                         default:
-//                            view.showError("Vui lòng liên hệ admin để biết thêm chi tiết");
-//                            SessionManager.update();
-//                            view.dispose();
+                            new MainMenuController(new MainMenu(), user);
+                            loginView.dispose();
                             break;
                     }
                 } else {

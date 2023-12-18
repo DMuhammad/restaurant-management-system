@@ -4,49 +4,84 @@
  */
 package model;
 
+import DB.koneksi;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Dzikri
  */
 public class Order {
-    private String menu_item;
-    private int quantity;
+
+    private int id;
+    private int user_id;
+    private String order_item;
     private String status;
-    private String payment_type;
-    private Double payment_amount;
+    private String date;
+    private Double total;
+
+    private Connection conn;
+    private PreparedStatement pst;
+    private ResultSet rst;
+
+    public Order() {
+
+    }
     
-    public Order(String menu_item, int quantity, String status) {
-        this.menu_item = menu_item;
-        this.quantity = quantity;
+    public Order(int id, int user_id, String order_item, String status, String date, Double total) {
+        this.id = id;
+        this.user_id = user_id;
+        this.order_item = order_item;
         this.status = status;
+        this.date = date;
+        this.total = total;
     }
 
     /**
-     * @return the menu_item
+     * @return the id
      */
-    public String getMenu_item() {
-        return menu_item;
+    public int getId() {
+        return id;
     }
 
     /**
-     * @param menu_item the menu_item to set
+     * @param id the id to set
      */
-    public void setMenu_item(String menu_item) {
-        this.menu_item = menu_item;
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
-     * @return the quantity
+     * @return the user_id
      */
-    public int getQuantity() {
-        return quantity;
+    public int getUser_id() {
+        return user_id;
     }
 
     /**
-     * @param quantity the quantity to set
+     * @param user_id the user_id to set
      */
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    /**
+     * @return the order_item
+     */
+    public String getOrder_item() {
+        return order_item;
+    }
+
+    /**
+     * @param order_item the order_item to set
+     */
+    public void setOrder_item(String order_item) {
+        this.order_item = order_item;
     }
 
     /**
@@ -64,32 +99,158 @@ public class Order {
     }
 
     /**
-     * @return the payment_type
+     * @return the date
      */
-    public String getPayment_type() {
-        return payment_type;
+    public String getDate() {
+        return date;
     }
 
     /**
-     * @param payment_type the payment_type to set
+     * @param date the date to set
      */
-    public void setPayment_type(String payment_type) {
-        this.payment_type = payment_type;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     /**
-     * @return the payment_amount
+     * @return the total
      */
-    public Double getPayment_amount() {
-        return payment_amount;
+    public Double getTotal() {
+        return total;
     }
 
     /**
-     * @param payment_amount the payment_amount to set
+     * @param total the total to set
      */
-    public void setPayment_amount(Double payment_amount) {
-        this.payment_amount = payment_amount;
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+    public boolean createOrder(int user_id, String order_item, String status, String date, Double total) {
+        boolean result = false;
+        try {
+            conn = koneksi.koneksi();
+            pst = conn.prepareStatement("INSERT INTO `order` (user_id, order_item, status, date, total) VALUES ('"
+                    + user_id + "','"
+                    + order_item + "','"
+                    + status + "','"
+                    + date + "','"
+                    + total + "');");
+            pst.execute();
+            result = true;
+        } catch (SQLException e) {
+        }
+        
+        return result;
     }
     
+    public List<Order> getAllPendingOrders() {
+        List<Order> orderList = new ArrayList<>();
+
+        try {
+            conn = koneksi.koneksi();
+            pst = conn.prepareStatement("SELECT * FROM `order` WHERE status = 'PENDING'");
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int user_id = rs.getInt("user_id");
+                String order_item = rs.getString("order_item");
+                String status = rs.getString("status");
+                String date = rs.getString("date");
+                double total = rs.getDouble("total");
+                Order order = new Order(id, user_id, order_item, status, date, total);
+                orderList.add(order);
+            }
+        } catch (Exception e) {
+        }
+
+        return orderList;
+    }
     
+    public List<Order> getAllPreparedOrders() {
+        List<Order> orderList = new ArrayList<>();
+
+        try {
+            conn = koneksi.koneksi();
+            pst = conn.prepareStatement("SELECT * FROM `order` WHERE status = 'PREPARED'");
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int user_id = rs.getInt("user_id");
+                String order_item = rs.getString("order_item");
+                String status = rs.getString("status");
+                String date = rs.getString("date");
+                double total = rs.getDouble("total");
+                Order order = new Order(id, user_id, order_item, status, date, total);
+                orderList.add(order);
+            }
+        } catch (Exception e) {
+        }
+
+        return orderList;
+    }
+    
+    public List<Order> getAllOrders() {
+        List<Order> orderList = new ArrayList<>();
+
+        try {
+            conn = koneksi.koneksi();
+            pst = conn.prepareStatement("SELECT * FROM `order`");
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int user_id = rs.getInt("user_id");
+                String order_item = rs.getString("order_item");
+                String status = rs.getString("status");
+                String date = rs.getString("date");
+                double total = rs.getDouble("total");
+                Order order = new Order(id, user_id, order_item, status, date, total);
+                orderList.add(order);
+            }
+        } catch (Exception e) {
+        }
+
+        return orderList;
+    }
+    
+    public List<Order> getOrderByUserId(int uid) {
+        List<Order> orderList = new ArrayList<>();
+
+        try {
+            conn = koneksi.koneksi();
+            pst = conn.prepareStatement("SELECT * FROM `order` WHERE user_id = '" + uid + "'");
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int user_id = rs.getInt("user_id");
+                String order_item = rs.getString("order_item");
+                String status = rs.getString("status");
+                String date = rs.getString("date");
+                double total = rs.getDouble("total");
+                Order order = new Order(id, user_id, order_item, status, date, total);
+                orderList.add(order);
+            }
+        } catch (Exception e) {
+        }
+
+        return orderList;
+    }
+    
+    public boolean updateOrderStatus(int id, String status) {
+        boolean result = false;
+        try {
+            conn = koneksi.koneksi();
+            pst = conn.prepareStatement("UPDATE `order` SET status = '"
+                    + status + "' WHERE id = '"
+                    + id + "'");
+            pst.execute();
+            result = true;
+        } catch (SQLException e) {
+        }
+        return result;
+    }
 }

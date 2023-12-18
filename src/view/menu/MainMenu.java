@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view.admin;
+package view.menu;
 
 /**
  *
@@ -26,24 +26,17 @@ public class MainMenu extends javax.swing.JFrame {
     }
 
     /**
-     * @return the itemManagementButton
+     * @return the menuItemsButton
      */
-    public javax.swing.JButton getItemManagementButton() {
-        return itemManagementButton;
+    public javax.swing.JButton getMenuItemsButton() {
+        return menuItemsButton;
     }
 
     /**
-     * @return the orderManagementButton
+     * @return the orderedMenuButton
      */
-    public javax.swing.JButton getOrderManagementButton() {
-        return orderManagementButton;
-    }
-
-    /**
-     * @return the userManagementButton
-     */
-    public javax.swing.JButton getUserManagementButton() {
-        return userManagementButton;
+    public javax.swing.JButton getOrderedMenuButton() {
+        return orderedMenuButton;
     }
 
     /**
@@ -57,9 +50,8 @@ public class MainMenu extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        orderManagementButton = new javax.swing.JButton();
-        userManagementButton = new javax.swing.JButton();
-        itemManagementButton = new javax.swing.JButton();
+        orderedMenuButton = new javax.swing.JButton();
+        menuItemsButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -73,11 +65,9 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setForeground(new java.awt.Color(0, 102, 204));
 
-        orderManagementButton.setText("Order Management");
+        orderedMenuButton.setText("Ordered Menu");
 
-        userManagementButton.setText("User Management");
-
-        itemManagementButton.setText("Item Management");
+        menuItemsButton.setText("Menu Items");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -86,19 +76,18 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(userManagementButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(itemManagementButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(orderManagementButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(orderedMenuButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(menuItemsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
                 .addGap(10, 10, 10))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(itemManagementButton, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                .addGap(23, 23, 23)
+                .addComponent(menuItemsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(userManagementButton, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(orderManagementButton, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
+                .addComponent(orderedMenuButton, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                .addGap(21, 21, 21))
         );
 
         exitButton.setText("Exit");
@@ -187,10 +176,9 @@ public class MainMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton exitButton;
-    private javax.swing.JButton itemManagementButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JButton orderManagementButton;
-    private javax.swing.JButton userManagementButton;
+    private javax.swing.JButton menuItemsButton;
+    private javax.swing.JButton orderedMenuButton;
     // End of variables declaration//GEN-END:variables
 }

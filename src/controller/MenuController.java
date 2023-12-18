@@ -16,7 +16,7 @@ import java.util.List;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import view.admin.MainMenu;
+import view.admin.MainMenuAdmin;
 import model.Menu;
 
 /**
@@ -82,7 +82,7 @@ public class MenuController {
         itemView.getBackButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new MainMenuController(new MainMenu());
+                new MainMenuController(new MainMenuAdmin());
                 itemView.dispose();
             }
         });
